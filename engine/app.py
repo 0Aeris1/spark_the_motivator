@@ -16,7 +16,13 @@ class AIClient:
     # Calling OpenAI API
         response = self.client.responses.create(
             model="gpt-5.2",
-            instructions="You are the happiest motivational assistant",
+            instructions= ("You are an motivational assistant\n"
+                        "Give a short motivational and exciting message to\n"
+                        "keep the user motivated and happy\n"
+                        "Rules:\n"
+                        "- Maximum 30 words.\n"
+                        "- Strong and direct.\n"
+                        "- No emojis.\n\n"),
             input=prompt,
             max_output_tokens=150
         )
@@ -25,17 +31,27 @@ class AIClient:
 ai_client = AIClient()
 
 class MotivationRequest(BaseModel):
-    text: str
+    text: str | None = None
 
 class MotivationResponse(BaseModel):
     response: str
 
-def generate_motivation(user_text: str) -> str:
+def generate_motivation(user_text: str | None = None) -> str:
   
-    prompt = (
-            "You are my best motivator.\n"
-            f"User: {user_text}\n"
-            )
+
+    if user_text:
+        prompt = (
+                    f"User's text: {user_text}\n"
+                )
+    else:
+        prompt = ("You are motivational assistant\n"
+                  "Give a short motivational and exciting message to\n"
+                  "keep the user motivated and happy\n"
+                  "Rules:\n"
+                  "- Maximum 12 words.\n"
+                  "- One sentence only.\n"
+                  "- Strong and direct.\n"
+                  "- No emojis.\n\n")
 
     return ai_client.generate(prompt)
 

@@ -1,0 +1,105 @@
+:root {
+  --terminal-font: ui-monospace, SFMono-Regular, Menlo, Monaco,
+                   Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+
+/* Reset & fonts */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 320px;          /* smaller popup */
+  min-width: 320px;
+  max-width: 100%;
+  background: #000;       /* true black */
+  font-family: "Comic Sans MS", "Comic Neue", cursive, sans-serif; /* playful */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  gap: 12px;
+  border-radius: 24px;    /* super round */
+  background: #000;
+}
+
+/* Output: top, auto-expand */
+#output {
+  flex: 1;
+  padding: 14px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #ffffff;             /* comic bright white */
+  border-radius: 20px;     /* round edges */
+  background: #111;        /* slightly lighter black for contrast */
+  overflow-y: auto;
+  text-align: center;  
+  font-family: var(--terminal-font);
+  font-weight: 700;          /* bold */
+  letter-spacing: 0.02em;    /* terminal feel */
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.12);
+  white-space: pre-wrap;
+
+
+}
+
+/* Input bar at bottom */
+#input-bar {
+  display: flex;
+  gap: 8px;
+}
+
+#input {
+  flex: 1;
+  border-radius: 16px;
+  padding: 10px 12px;
+  border: none;
+  outline: none;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-family: var(--terminal-font);
+  font-weight: 600;
+}
+
+#go {
+  background: #fff;
+  color: #000;
+  border-radius: 16px;
+  padding: 0 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.1s ease;
+}
+
+#go:active {
+  transform: scale(0.95);
+}
+
+/* Scrollbar styling (subtle) */
+#output::-webkit-scrollbar {
+  width: 6px;
+}
+
+#output::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+  animation: fadeIn 0.3s ease-out;
+
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html, body, #app {
+  min-height: 150px;
+  max-height: 600px;
+}

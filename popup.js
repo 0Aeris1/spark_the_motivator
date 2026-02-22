@@ -1,25 +1,105 @@
-document.getElementById("go").addEventListener("click", async () => {
-    const input = document.getElementById("input").value;
+document.addEventListener("DOMContentLoaded", () => {
+    const go = document.getElementById("go");
+    const inputEl = document.getElementById("input");
     const outputEl = document.getElementById("output");
 
+async function runMotivation() {
+    const input = inputEl.value || "";
+
+    // Clear input immediately
+    inputEl.value = "";
+
     try {
-        const response = await fetch("http://127.0.0.1:8000/motivate",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({text: input})
-            });
+            const response = await fetch("http://127.0.0.1:8000/motivate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: input })
+        });
 
-        if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
+            const data = await response.json();
+
+            // AI Output
+            typeWriter(outputEl, data.response + "\n\n" + getAsciiArt(), 80);
+
+        } catch (err) {
+
+            typeWriter(outputEl, "Engine offline.\n" + err, 80);
+
         }
-
-        const data = await response.json();
-        outputEl.textContent = data.response;
-    } catch (err) {
-        outputEl.textContent = "Error connecting to AI engine. Make sure it's running.\n" + err;
     }
+    // 1️⃣ Attach handler
+    go.addEventListener("click", runMotivation);
+
+    // 2️⃣ Auto-run once on open
+    runMotivation();
 
 });
+
+function typeWriter(element, text, delay = 80) {
+    element.textContent = ""; // clear existing
+    const words = text.split(" ");
+    let i = 0;
+
+    const interval = setInterval(() => {
+        element.textContent += (i === 0 ? "" : " ") + words[i];
+        i++;
+        if (i >= words.length) clearInterval(interval);
+    }, delay);
+
+}
+
+function getAsciiArt() {
+    const arts = [
+    `  (ง'̀-'́)ง
+    FIGHT.`,
+
+    `  ┌( ಠ_ಠ)┘
+    MOVE.`,
+
+    `  (•̀o•́)ง
+    START.`,
+
+    `  >_>
+    DO IT.`,
+
+    `  (¬‿¬)
+    YEAH!`,
+
+    `  (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+    GO GO!`,
+
+    `  (ง •̀_•́)ง
+      PUSH!`,
+
+    `  (☞ﾟヮﾟ)☞
+      YOU GOT THIS!`,
+
+    `  (ಠ_ಠ)
+      FOCUS!`,
+
+    `  (•_•)
+      NO EXCUSES!`,
+
+    `  (⊙_⊙)
+      KEEP GOING!`,
+
+    `  (⌐■_■)
+      WORK!`,
+
+    `  (╭☞ ͡° ͜ʖ ͡°)╭☞
+      SMILE & WORK!`,
+
+    `  (ﾉಥ益ಥ）ﾉ
+      GRIND!`,
+
+    `  (✧ω✧)
+      HUSTLE!`,
+
+    `  ( •_•)>⌐■-■
+      MOTIVATE!`
+        ];
+
+    return arts[Math.floor(Math.random() * arts.length)];
+}
+
+

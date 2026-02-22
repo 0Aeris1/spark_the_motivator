@@ -1,12 +1,18 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="output"></div>
+    <div id="input-bar">
+      <input id="input" type="text" />
+      <button id="go">↻</button>
+    </div>
+  </div>
 
-<html>
-    <body>
-        <h3>What are you about to do?</h3>
-        <textarea id="input" rows="4" cols="30"></textarea><br>
-        <button id="go">Motivate me</button>
-        <pre id="output"></pre>
-
-        <script src=popup.js></script>
-    </body>
+  <script src="popup.js"></script>
+</body>
 </html>
