@@ -5,8 +5,8 @@ from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
-from ai import generate_motivation
-from schemas import MotivationRequest, MotivationResponse
+from engine.backend.ai import generate_motivation
+from engine.backend.schemas import MotivationRequest, MotivationResponse
 
 
 limiter = Limiter(key_func=get_remote_address)
@@ -31,15 +31,15 @@ app.add_middleware(
 
 @app.post("/motivate", response_model=MotivationResponse)
 @limiter.limit("5/day")
-def motivate(req: MotivationRequest, request: Request):
+async def motivate(request: Request, req: MotivationRequest):
     try:
         reply = generate_motivation(req.text)
-
         return {"response": reply}
-    except Exception:
+    except HTTPException:
+        raise
+    except Exception as e:
+        print("ERROR:", e)   # or logging
         raise HTTPException(
-                status_code=500,
-                detail="AI malfunctioned. Or humanity did."
-                )
-
-
+            status_code=500,
+            detail="AI malfunctioned. Or humanity did."
+        )
