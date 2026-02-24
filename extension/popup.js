@@ -12,9 +12,7 @@ async function runMotivation() {
     try {
             const response = await fetch("https://motivating-extension.onrender.com/motivate", {
             method: "POST",
-            headers: { "Content-Type": "application/json", 'X-Internal-Key: "D8yE/TJX2Aa+Pz9lxznDnKLDBdsq+HDKR4iTaC5FCLE="
-' },
-
+            headers: { "Content-Type": "application/json"},
             body: JSON.stringify({ text: input })
         });
  
