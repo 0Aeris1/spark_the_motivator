@@ -1,6 +1,4 @@
-import os
-
-from fastapi import FastAPI, HTTPException, Request, Header, Depends
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi import Limiter
@@ -22,12 +20,6 @@ def rate_limit_handler(request: Request, exc: RateLimitExceeded):
                 content={"detail": "Slow down. Discipline builds greatness."}
             )
 
-INTERNAL_API_KEY = os.getenv("INTERNAL_API_KEY")
-
-def verify_api_key(x_internal_key: str = Header(None)):
-    if x_internal_key != INTERNAL_API_KEY:
-        raise HTTPException(status_code=403, detail="Forbidden")
-
 app.add_middleware(
         CORSMiddleware,
         allow_origins = ["*"],
@@ -39,7 +31,7 @@ allow_credentials = True
 
 @app.post("/motivate", response_model=MotivationResponse)
 @limiter.limit("5/day")
-async def motivate(request: Request, req: MotivationRequest, _: None = Depends(verify_api_key)):
+async def motivate(request: Request, req: MotivationRequest):
     try:
         reply = generate_motivation(req.text)
         return {"response": reply}
