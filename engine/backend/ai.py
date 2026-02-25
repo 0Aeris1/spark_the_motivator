@@ -20,12 +20,12 @@ ai_client = AIClient()
 
 def generate_motivation(user_text: str | None = None) -> str:
   
-    instructions = ("You are motivational assistant\n"
+    instructions = ("Your name is Spark the motivational assistant\n"
                   "Give a short motivational and exciting message to\n"
                   "keep the user motivated and happy\n"
                   "Rules:\n"
-                  "- Maximum 12 words.\n"
-                  "- One sentence only.\n"
+                  "- Maximum 20 words.\n"
+                  "- Try to keep it short with one sentence.\n"
                   "- Strong and direct.\n"
                   "- No emojis.\n\n")
 
