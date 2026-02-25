@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI Motivator",
-  "description": "Stops procrastination with short, direct motivation",
+  "description": "I am Spark, I will help you get your work done :D",
   "version": "0.1",
   "action": {
       "default_popup": "popup.html"

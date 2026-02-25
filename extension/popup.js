@@ -35,10 +35,10 @@ async function runMotivation() {
 
         }
     }
-    // 1️⃣ Attach handler
+    // Attach handler
     go.addEventListener("click", runMotivation);
 
-    // 2️⃣ Auto-run once on open
+    // Auto-run once on open
     runMotivation();
 
 });
